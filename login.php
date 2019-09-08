@@ -1,7 +1,7 @@
 <?php
 include "db.php";
 
-session_start();
+//session_start();
 
 #Login script is begin here
 #If user given credential matches successfully with the data available in database then we will echo string login_success

@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 include "db.php";
 if (isset($_POST["f_name"])) {
 
@@ -14,6 +14,14 @@ if (isset($_POST["f_name"])) {
 	$name = "/^[a-zA-Z ]+$/";
 	$emailValidation = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9]+(\.[a-z]{2,4})$/";
 	$number = "/^[0-9]+$/";
+	$validEmailAddress = false;
+
+	$contents = file_get_contents("https://mailshunt.com/api/verifier-lookup/".$email);
+	if($contents !== false){
+		if (json_decode($contents)->deliverable) {
+			$validEmailAddress = true;
+		}
+	}
 
 if(empty($f_name) || empty($l_name) || empty($email) || empty($password) || empty($repassword) ||
 	empty($mobile) || empty($address1) || empty($address2)){
@@ -44,6 +52,15 @@ if(empty($f_name) || empty($l_name) || empty($email) || empty($password) || empt
 		exit();
 	}
 	if(!preg_match($emailValidation,$email)){
+		echo "
+			<div class='alert alert-warning'>
+				<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+				<b>this $email is not valid..!</b>
+			</div>
+		";
+		exit();
+	}
+	if(!$validEmailAddress){
 		echo "
 			<div class='alert alert-warning'>
 				<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>

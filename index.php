@@ -1,5 +1,5 @@
 <?php
- session_start();
+// session_start();
 if(isset($_SESSION["uid"])){
 	header("location:profile.php");
 }
@@ -147,6 +147,18 @@ if(isset($_SESSION["uid"])){
 			<div class="col-md-1"></div>
 		</div>
 	</div>
+<script>
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+
+    function showPosition(position) {
+        console.log("Latitude: " + position.coords.latitude +
+            " Longitude: " + position.coords.longitude);
+    }
+</script>
 </body>
 </html>
 
